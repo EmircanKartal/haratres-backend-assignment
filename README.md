@@ -119,3 +119,4 @@ Business logic classes contain no input/output. CLI adapters own all prompts and
 - Pricing: assignment discount example, three-entry scenario, equal/increasing prices, repeatable totals.
 
 See [design decisions](docs/decisions.md) for assumptions and tradeoffs.
+For detailed build, run, and Docker instructions see [docs/run.md](docs/run.md).
