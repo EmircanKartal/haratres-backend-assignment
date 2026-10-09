@@ -58,8 +58,12 @@ Değerlendirme Puanı: 4.5
 Birim Fiyat: 3.00
 Stok Miktarı: 50
 Değerlendirme Puanı: 4.7
-Ürünleri hangi kritere göre sıralamak istersiniz? (name/stock/rating): rating
-Sıralama türü artan mı azalan mı olsun? (artan/azalan): azalan
+Ürünleri hangi kritere göre sıralamak istersiniz? (name/stock/rating)
+rating
+Seçilen Kriter: rating
+Sıralama türü artan mı azalan mı olsun? (artan/azalan)
+azalan
+Seçilen Sıralama Türü: azalan
 Sıralanmış Ürünler:
 Defter - Fiyat: 3.00, Stok: 50, Değerlendirme: 4.7
 Kalem - Fiyat: 1.50, Stok: 100, Değerlendirme: 4.5
@@ -106,12 +110,12 @@ Business logic classes contain no input/output. CLI adapters own all prompts and
 
 ## Tests
 
-77 JUnit 5 tests covering:
-- Character counting: occurrence counting, Turkish i pairs, supplementary code points, zero matches, validation.
+124 JUnit 5 tests covering:
+- Character counting: occurrence counting, Turkish i/ı pairs, supplementary code points, zero matches, validation.
 - CLI flows: happy paths, invalid-input recovery, EOF at every step.
-- Products: all constraints, duplicate-name detection, Turkish case-insensitive lookup.
+- Products: all field constraints (boundaries included), duplicate-name detection, Turkish case-insensitive lookup.
 - Sorting: all three fields and both directions, tiebreaking, catalog immutability.
-- Cart: merging, stock validation, atomic rejection on exceeded stock, preserved insertion order.
+- Cart: merging quantities, stock re-ask on insufficient stock, unknown product handling, minimum 2 distinct products, insertion-order preservation.
 - Pricing: assignment discount example, three-entry scenario, equal/increasing prices, repeatable totals.
 
 See [design decisions](docs/decisions.md) for assumptions and tradeoffs.
