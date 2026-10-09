@@ -410,16 +410,16 @@ class ShopCliTest {
      * keep the cart loop open (NOT exit with status 1).
      */
     @Test void cartWithOnlyOneDistinctProductIsRejectedOnHayir() {
-        // Only Kalem in cart; user says Hayır → error → forced to say Evet → add Defter → Hayır
+        // Only Kalem in cart; user says Hayır → error + jump straight to product name prompt.
+        // No redundant yes/no re-ask — Defter name is next in input.
         String input = lines("2",
                 "Kalem", "1.50", "10", "4.5",
                 "Defter", "3.00", "50", "4.7",
                 "name", "artan",
                 "Evet",
                 "Kalem", "1",
-                "Hayır",        // rejected: only 1 distinct product
-                "Evet",         // re-prompted: continue adding
-                "Defter", "2",
+                "Hayır",    // rejected: only 1 distinct product → error → product name prompt
+                "Defter", "2",  // no "Evet" needed; directly asked for product name
                 "Hayır");
         Capture c = run(input);
         assertEquals(0, c.status, "stderr: " + c.errors);

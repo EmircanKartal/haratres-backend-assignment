@@ -113,24 +113,23 @@ public final class ShopCli {
                 }
             }
 
-            // "başka?" prompt — don't allow exit until ≥ 2 distinct products are in the cart.
-            while (true) {
-                Boolean continueAdding = readYesNo(input, out, err,
-                        "Sepete başka ürün eklemek ister misiniz? (Evet/Hayır): ");
-                if (continueAdding == null) {
-                    return 1;
-                }
-                if (continueAdding) {
-                    continue outer; // go back to product name prompt
-                }
-                // User wants to stop — enforce minimum of 2 distinct products.
-                if (cart.distinctProductCount() < 2) {
-                    err.println("Sepette en az iki farklı ürün olmalıdır.");
-                    // Stay in the "başka?" loop to re-prompt.
-                } else {
-                    break outer; // minimum met → proceed to checkout
-                }
+            // "başka?" prompt.
+            Boolean continueAdding = readYesNo(input, out, err,
+                    "Sepete başka ürün eklemek ister misiniz? (Evet/Hayır): ");
+            if (continueAdding == null) {
+                return 1;
             }
+            if (continueAdding) {
+                continue outer; // user wants more → go back to product name prompt
+            }
+            // User said Hayır. Check minimum.
+            if (cart.distinctProductCount() < 2) {
+                // Minimum not met: warn and immediately ask for a product name again.
+                // Re-asking the same yes/no would be confusing ("you just said no, why ask again?").
+                err.println("Sepette en az iki farklı ürün olmalıdır. Lütfen başka bir ürün ekleyin.");
+                continue outer;
+            }
+            break outer; // minimum met → proceed to checkout
         }
 
         // --- 6. Checkout ---
